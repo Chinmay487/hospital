@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Home Page</h1>
+    <form action="find" method="post">
+        {% csrf_token %}
+        <input type="text" name="patient_name" id="" placeholder="Search patient">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    <table>
+        <tr>
+            <th>Sr. no.</th>
+            <th>Name</th>
+            <th>Admission Date</th>
+            <th>Discharge</th>
+            <th>Ward no.</th>
+            
+        </tr>
+        {% for detail in details %}
+        <tr>
+            <td id="patient_number">{{detail.id}}</td>
+            
+            <td><a href='details/?patient_id={{detail.id}}'>{{detail.patient_name}}</a></td>
+            <td>{{detail.admission_date}}</td>
+            <td>
+                {% if not detail.discharge %}
+                    Not Yet
+                {% else %}
+                    Gone
+                {% endif %}
+            </td>
+            <td>{{ detail.ward_number }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

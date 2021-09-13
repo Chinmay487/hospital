@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <h1>Patient Details</h1>
+    <div>
+        <h1>Name : {{patient_detail.patient_name}} </h1>
+        <h1>Contact :  {{patient_detail.contact}} </h1>
+        <h1>Admission Date : {{patient_detail.admission_date}} </h1>
+        <h1>Got Discharge : {{patient_detail.got_discharge}} </h1>
+        <h1>Ward Number : {{patient_detail.ward_number}} </h1>
+        <h1>Amount Paid : {{patient_detail.total_payment}} </h1> 
+    </div>
+    {% if not patient_detail.got_discharge %}
+        <h1>
+            <a href="/update/?patient_id={{patient_detail.id}}">Update Info</a>
+        </h1>
+    {% endif %}
+
+{% endblock %}
