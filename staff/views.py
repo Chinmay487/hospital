@@ -16,11 +16,19 @@ class Home(View):
 
 class Today_appointments(View):
     def get(self,request):
-        content = {
-            'page_title' : "today's Appointments",
-            'appointments' : Appointments.objects.all()[::-1]
-        }
-        return render(request,'view_appointments.html',content)
+        if request.user.is_authenticated:
+            content = {
+                'page_title' : "today's Appointments",
+                'appointments' : Appointments.objects.all()[::-1]
+            }
+            page = 'view_appointments.html'
+        else:
+            content = {
+                'page_title':'Page not found',
+            }
+            page = '404.html'
+            
+        return render(request,page,content)
 
 class Login_Page(View):
     def get(self,request):
