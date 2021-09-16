@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Book Your Appointment with our doctor</h1>
+    <form action="book_appointment" method="post">
+        {% csrf_token %}
+        <label for="">Patient Name : {{ appointment_form.patient_name }}</label> <br><br>
+        <label for="">Contact Number : {{ appointment_form.contact }}</label> <br><br>
+        <label for="">Disease : {{ appointment_form.disease }}</label><br><br>
+        <label for="">Email : {{ appointment_form.email }}</label><br><br>
+        <label for="">Date of Appointment {{ appointment_form.date_for_appointment }}</label><br><br>
+        <button type="submit">Submit Form</button>
+    </form>
+{% endblock %}

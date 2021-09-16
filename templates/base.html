@@ -12,21 +12,31 @@
         <li>
             <a href="/">Home Page</a>
         </li>
+        
+        {% if request.user.is_authenticated %}
         <li>
             <a href="/new_patient">Add New Patient</a>
         </li>
         <li>
-            <a href="/login">Login</a>
+            <a href="/view_appointment">Today's appointments</a>
         </li>
         <li>
-            <a href="logout">Logout</a>
+            <a href="/logout">Logout</a>
         </li>
+        {% else %}
+        <li>
+            <a href="/book_appointment">Book Appointment</a>
+        </li>
+        <li>
+            <a href="/login">Login</a>
+        </li>
+        
+        {% endif %}
     </ul>
 
     {% block content %}
     
     {% endblock %}
-<h1>made changes</h1>
 </body>
 <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 </html>

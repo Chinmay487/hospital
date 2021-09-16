@@ -6,11 +6,18 @@ from . import models
 
 class New_patient(View):
     def get(self,request):
-        content = {
-            'page_title' : 'Add new Patient',
-            'patient_form':forms.Patient_form()
-        }
-        return render(request,'new_patient.html',content)
+        if request.user.is_authenticated:
+            content = {
+                'page_title' : 'Add new Patient',
+                'patient_form':forms.Patient_form()
+            }
+            page = 'new_patient.html'
+        else:
+            content = {
+                'page_title' : 'page not found'
+            }
+            page = '404.html'
+        return render(request,page,content)
 
     def post(self,request):
         patient_name = request.POST['patient_name']
@@ -34,23 +41,38 @@ class New_patient(View):
 
 class Details(View):
     def get(self,request):
-        patient_id = request.GET['patient_id']
-        content = {
-            'page_title' : 'Patient Details',
-            'patient_detail':models.Patient_details.objects.get(id = patient_id)
-        }
-        return render(request,'details.html',content)
+        if request.user.is_authenticated:
+            patient_id = request.GET['patient_id']
+            content = {
+                'page_title' : 'Patient Details',
+                'patient_detail':models.Patient_details.objects.get(id = patient_id)
+            }
+            page = 'details.html'
+        else:
+            page = '404.html'
+            content = {
+                'page_title':'page not found'
+            }
+        return render(request,page,content)
 
 
 class Update_info(View):
     def get(self,request):
-        patient_id = request.GET['patient_id']
-        content = {
-            'page_title':'Update details',
-            'current_details':models.Patient_details.objects.get(id = patient_id),
-            'update_form':forms.Update_form()
-        }
-        return render(request,'update_info.html',content)
+        if request.user.is_authenticated:
+            patient_id = request.GET['patient_id']
+            content = {
+                'page_title':'Update details',
+                'current_details':models.Patient_details.objects.get(id = patient_id),
+                'update_form':forms.Update_form()
+            }
+            page = 'update_info.html'
+        else:
+            page = '404.html'
+            content = {
+                'page_title':'page not found'
+            }
+
+        return render(request,page,content)
 
     def post(self,request):
         patient_id = request.POST['patient_id']
@@ -72,8 +94,29 @@ class Update_info(View):
 
         return redirect('/')
 
+class Book_appointment(View):
+    def get(self,request):
+        content = {
+            'page_title':'Book Apointment',
+            'appointment_form':forms.Appointment_form()
+        }
+        return render(request,'appointment.html',content)
 
-
+    def post(self,request):
+        patient_name = request.POST['patient_name']
+        contact = request.POST['contact']
+        email = request.POST['email']
+        disease = request.POST['disease']
+        date_for_appointment = request.POST['date_for_appointment']
+        appoitment = models.Appointments(
+            patient_name = patient_name,
+            contact = contact,
+            email = email,
+            disease = disease,
+            date_for_appointment = date_for_appointment,
+        )
+        appoitment.save()
+        return redirect('/')
 
 
 
