@@ -4,7 +4,7 @@
 
     <h1>{{current_detils.patient_name}}</h1>
     <h1>{{current_detils.contact}}</h1>
-    <form action="update" method="post">
+    <form action="/update/" method="post">
         {% csrf_token %}
         <label for="">Current Disease {{current_details.disease}} : {{ update_form.disease }}</label><br><br>
         <label for="">Current admission date {{current_details.admission_date}} : {{ update_form.admission_date }}</label><br><br>
